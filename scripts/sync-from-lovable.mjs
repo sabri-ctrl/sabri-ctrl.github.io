@@ -1,5 +1,9 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
+import {
+  addCustomProjectsToAppScript,
+  addCustomProjectsToHtml,
+} from "./project-customizations.mjs";
 
 const sourceOrigin = "https://abdullah-abbas-portfolio.lovable.app";
 
@@ -66,7 +70,7 @@ html = html
   .replace("Hello Alex, ...", "Hello Abdullah, ...")
   .replace("<title>", '<link rel="icon" href="./favicon.svg" type="image/svg+xml"/><title>');
 
-html = rewriteSharedPaths(html);
+html = addCustomProjectsToHtml(rewriteSharedPaths(html));
 await writeFile("index.html", html);
 
 for (const scriptPath of ["assets/index-CbOx-5u3.js", "assets/index-DaL05lpB.js"]) {
@@ -77,6 +81,9 @@ for (const scriptPath of ["assets/index-CbOx-5u3.js", "assets/index-DaL05lpB.js"
     .replaceAll(',{name:"twitter:site",content:"@Lovable"}', "")
     .replace(/,\{property:"og:image",content:"[^"]+"\},\{name:"twitter:image",content:"[^"]+"\}/, "")
     .replaceAll("Hello Alex, ...", "Hello Abdullah, ...");
+  if (scriptPath.endsWith("index-DaL05lpB.js")) {
+    source = addCustomProjectsToAppScript(source);
+  }
   await writeFile(scriptPath, source);
 }
 
