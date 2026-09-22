@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">IoT temperature instrumentation system flow</title>
+  <desc id="desc">Flow from temperature sensing through a thermistor, Wheatstone bridge, LM741 signal conditioning, ESP8266 conversion, Blynk Cloud, and a smartphone dashboard.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08131d"/>
+      <stop offset="1" stop-color="#101f2c"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#67e8f9" stroke-opacity="0.055" stroke-width="1"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#67e8f9"/>
+    </marker>
+    <style>
+      .eyebrow { font: 600 18px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: 3px; fill: #67e8f9; }
+      .title { font: 700 42px Inter, Segoe UI, Arial, sans-serif; fill: #f8fafc; }
+      .lane { font: 600 15px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: 2px; fill: #94a3b8; }
+      .step { font: 700 22px Inter, Segoe UI, Arial, sans-serif; fill: #f8fafc; }
+      .detail { font: 400 16px Inter, Segoe UI, Arial, sans-serif; fill: #cbd5e1; }
+      .code { font: 500 15px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #a5f3fc; }
+      .num { font: 700 17px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #08131d; }
+      .arrow { fill: none; stroke: #67e8f9; stroke-width: 4; marker-end: url(#arrow); }
+      .arrow-dashed { fill: none; stroke: #67e8f9; stroke-width: 3; stroke-dasharray: 10 10; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="34" fill="url(#bg)"/>
+  <rect width="1600" height="900" rx="34" fill="url(#grid)"/>
+
+  <text x="80" y="80" class="eyebrow">SYSTEM FLOW</text>
+  <text x="80" y="132" class="title">ESP8266 IoT Temperature Instrumentation</text>
+  <text x="80" y="176" class="detail">Analog sensing, signal conditioning, embedded processing, and wireless visualization</text>
+
+  <text x="80" y="245" class="lane">01 / SENSING &amp; ANALOG FRONT END</text>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="280" width="280" height="170" rx="20" fill="#10293a" stroke="#67e8f9" stroke-opacity="0.55" stroke-width="2"/>
+    <circle cx="117" cy="318" r="18" fill="#67e8f9"/>
+    <text x="111" y="324" class="num">1</text>
+    <text x="110" y="366" class="step">Temperature</text>
+    <text x="110" y="400" class="detail">Ambient heat changes the</text>
+    <text x="110" y="424" class="detail">NTC thermistor resistance.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="440" y="280" width="280" height="170" rx="20" fill="#10293a" stroke="#67e8f9" stroke-opacity="0.55" stroke-width="2"/>
+    <circle cx="477" cy="318" r="18" fill="#67e8f9"/>
+    <text x="471" y="324" class="num">2</text>
+    <text x="470" y="366" class="step">Wheatstone Bridge</text>
+    <text x="470" y="400" class="detail">Converts resistance change</text>
+    <text x="470" y="424" class="detail">into differential voltage.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="800" y="280" width="280" height="170" rx="20" fill="#10293a" stroke="#67e8f9" stroke-opacity="0.55" stroke-width="2"/>
+    <circle cx="837" cy="318" r="18" fill="#67e8f9"/>
+    <text x="831" y="324" class="num">3</text>
+    <text x="830" y="366" class="step">LM741 + Filter</text>
+    <text x="830" y="400" class="detail">Amplifies and conditions the</text>
+    <text x="830" y="424" class="detail">analog signal for ADC input.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1160" y="280" width="360" height="170" rx="20" fill="#12364b" stroke="#67e8f9" stroke-width="2.5"/>
+    <circle cx="1197" cy="318" r="18" fill="#67e8f9"/>
+    <text x="1191" y="324" class="num">4</text>
+    <text x="1190" y="366" class="step">ESP8266 ADC</text>
+    <text x="1190" y="400" class="detail">Samples A0, then converts the</text>
+    <text x="1190" y="424" class="detail">raw count into engineering units.</text>
+  </g>
+
+  <path class="arrow" d="M 360 365 H 428"/>
+  <path class="arrow" d="M 720 365 H 788"/>
+  <path class="arrow" d="M 1080 365 H 1148"/>
+
+  <text x="80" y="540" class="lane">02 / FIRMWARE, TELEMETRY &amp; DISPLAY</text>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="575" width="390" height="205" rx="20" fill="#0d2535" stroke="#2dd4bf" stroke-opacity="0.75" stroke-width="2"/>
+    <circle cx="117" cy="613" r="18" fill="#2dd4bf"/>
+    <text x="111" y="619" class="num">5</text>
+    <text x="110" y="662" class="step">Calibration Logic</text>
+    <text x="110" y="700" class="code">ADC -&gt; voltage -&gt; temperature</text>
+    <text x="110" y="736" class="detail">Arduino firmware calculates values</text>
+    <text x="110" y="760" class="detail">and prints local serial diagnostics.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="605" y="575" width="390" height="205" rx="20" fill="#0d2535" stroke="#2dd4bf" stroke-opacity="0.75" stroke-width="2"/>
+    <circle cx="642" cy="613" r="18" fill="#2dd4bf"/>
+    <text x="636" y="619" class="num">6</text>
+    <text x="635" y="662" class="step">Wi-Fi + Blynk Cloud</text>
+    <text x="635" y="700" class="code">V2 uptime  |  V4 voltage  |  V5 temperature</text>
+    <text x="635" y="736" class="detail">The ESP8266 publishes measurements</text>
+    <text x="635" y="760" class="detail">over Wi-Fi to cloud data streams.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1130" y="575" width="390" height="205" rx="20" fill="#12364b" stroke="#67e8f9" stroke-width="2.5"/>
+    <circle cx="1167" cy="613" r="18" fill="#67e8f9"/>
+    <text x="1161" y="619" class="num">7</text>
+    <text x="1160" y="662" class="step">Smartphone Dashboard</text>
+    <text x="1160" y="700" class="detail">Blynk gauges display the voltage,</text>
+    <text x="1160" y="724" class="detail">temperature, and system uptime for</text>
+    <text x="1160" y="748" class="detail">remote monitoring.</text>
+  </g>
+
+  <path class="arrow" d="M 1340 450 V 505 Q 1340 520 1325 520 H 275 Q 260 520 260 535 V 563"/>
+  <path class="arrow" d="M 470 677 H 593"/>
+  <path class="arrow" d="M 995 677 H 1118"/>
+  <path class="arrow-dashed" d="M 800 780 V 832 H 1340 V 792"/>
+  <text x="816" y="854" class="code">continuous Blynk.run() + timer.run() service loop</text>
+
+  <text x="80" y="854" class="eyebrow" opacity="0.75">SENSOR -&gt; CONDITION -&gt; CONVERT -&gt; TRANSMIT -&gt; VISUALIZE</text>
+</svg>
