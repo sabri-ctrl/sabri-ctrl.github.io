@@ -4,6 +4,7 @@ import {
   addCustomProjectsToAppScript,
   addCustomProjectsToHtml,
 } from "./project-customizations.mjs";
+import { addMeshingGearsToCss } from "./gear-customizations.mjs";
 
 const sourceOrigin = "https://abdullah-abbas-portfolio.lovable.app";
 
@@ -86,5 +87,8 @@ for (const scriptPath of ["assets/index-CbOx-5u3.js", "assets/index-DaL05lpB.js"
   }
   await writeFile(scriptPath, source);
 }
+
+const cssPath = "assets/styles-Dtw_Dlqv.css";
+await writeFile(cssPath, addMeshingGearsToCss(await readFile(cssPath, "utf8")));
 
 console.log("Created a clean, portable index.html without Lovable branding.");

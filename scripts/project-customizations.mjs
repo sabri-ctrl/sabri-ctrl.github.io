@@ -1,6 +1,11 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import {
+  addMeshingGearsToAppScript,
+  addMeshingGearsToCss,
+  addMeshingGearsToHtml,
+} from "./gear-customizations.mjs";
 
 const projectSubtitle =
   "Selected work in mechanical design, simulation, manufacturing, instrumentation, robotics, and embedded systems.";
@@ -347,7 +352,7 @@ export function addCustomProjectsToHtml(source) {
     html = `${html.slice(0, insertAt)}${projectCard(project, 6 + offset)}${html.slice(insertAt)}`;
   }
 
-  return addAboutSkillsToHtml(addSkillsToHtml(html));
+  return addMeshingGearsToHtml(addAboutSkillsToHtml(addSkillsToHtml(html)));
 }
 
 function addFlowchartSupportToAppScript(source) {
@@ -451,21 +456,24 @@ export function addCustomProjectsToAppScript(source) {
     .join("");
   script = `${script.slice(0, projectArrayEnd)}${compiledProjects}${script.slice(projectArrayEnd)}`;
 
-  return addAboutSkillsToAppScript(
+  return addMeshingGearsToAppScript(addAboutSkillsToAppScript(
     addSkillsToAppScript(
       addImageFitSupportToAppScript(addFlowchartSupportToAppScript(script)),
     ),
-  );
+  ));
 }
 
 export async function applyProjectCustomizations() {
   const htmlPath = "index.html";
   const appScriptPath = "assets/index-DaL05lpB.js";
+  const cssPath = "assets/styles-Dtw_Dlqv.css";
   const html = await readFile(htmlPath, "utf8");
   const appScript = await readFile(appScriptPath, "utf8");
+  const css = await readFile(cssPath, "utf8");
 
   await writeFile(htmlPath, addCustomProjectsToHtml(html));
   await writeFile(appScriptPath, addCustomProjectsToAppScript(appScript));
+  await writeFile(cssPath, addMeshingGearsToCss(css));
 }
 
 const invokedDirectly =
