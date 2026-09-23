@@ -35,4 +35,4 @@ node scripts/sync-from-lovable.mjs
 
 This downloads the latest compiled site, localizes its assets, removes the Lovable badge and analytics script, and updates the metadata.
 
-Portfolio-only projects and copy changes are reapplied by `scripts/project-customizations.mjs` whenever the site is refreshed.
+Portfolio-specific projects, copy changes, and the meshing gear animation are reapplied by `scripts/project-customizations.mjs` whenever the site is refreshed.
