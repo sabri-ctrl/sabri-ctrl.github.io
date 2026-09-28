@@ -518,7 +518,7 @@ export async function applyProjectCustomizations() {
   const css = await readFile(cssPath, "utf8");
 
   await writeFile(htmlPath, addCustomProjectsToHtml(html));
-  await writeFile(appScriptPath, addCustomProjectsToAppScript(appScript));
+  await writeFile(appScriptPath, addPortfolioAssetVersion(addCustomProjectsToAppScript(appScript)));
   await writeFile(runtimeScriptPath, addPortfolioAssetVersion(runtimeScript));
   await writeFile(cssPath, addMeshingGearsToCss(css));
 }
