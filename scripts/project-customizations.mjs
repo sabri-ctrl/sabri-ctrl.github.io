@@ -10,6 +10,11 @@ import {
 const projectSubtitle =
   "Selected work in mechanical design, simulation, manufacturing, instrumentation, robotics, and embedded systems.";
 
+// Saved in archive/heading-boat.json; keep it hidden through future site refreshes.
+const temporarilyHiddenProjects = [
+  { id: "heading-boat", title: "Sensor-Based Heading Control Boat" },
+];
+
 const palmProject = {
   id: "palm-fruit-harvester",
   title: "Palm Fruit Harvesting System",
@@ -264,6 +269,31 @@ function removeProjectCard(source, project) {
   return html;
 }
 
+function renumberProjectCards(source) {
+  const start = source.indexOf('<section id="projects"');
+  const end = source.indexOf('<section id="about"', start);
+  if (start < 0 || end < 0) throw new Error("Could not locate the projects section");
+
+  let number = 0;
+  let delay = 0;
+  const section = source.slice(start, end)
+    .replace(/PROJECT_<!-- -->\d{2}/g, () => `PROJECT_<!-- -->${String(++number).padStart(2, "0")}`)
+    .replace(/style="animation-delay:\d+ms"/g, () => `style="animation-delay:${delay++ * 60}ms"`);
+  return `${source.slice(0, start)}${section}${source.slice(end)}`;
+}
+
+function removeHiddenProjectsFromAppScript(source) {
+  let script = source;
+  for (const project of temporarilyHiddenProjects) {
+    const start = script.indexOf(`,{id:"${project.id}",`);
+    if (start < 0) continue;
+    const end = script.indexOf(',{id:', start + 2);
+    if (end < 0) throw new Error(`Could not isolate the compiled ${project.title} data`);
+    script = `${script.slice(0, start)}${script.slice(end)}`;
+  }
+  return script;
+}
+
 function skillCategoryCard(category) {
   const skillClass =
     "font-mono text-xs px-2.5 py-1 rounded border border-border bg-secondary/30 text-foreground hover:border-primary/50 hover:text-primary transition-colors";
@@ -352,7 +382,11 @@ export function addCustomProjectsToHtml(source) {
     html = `${html.slice(0, insertAt)}${projectCard(project, 6 + offset)}${html.slice(insertAt)}`;
   }
 
-  return addMeshingGearsToHtml(addAboutSkillsToHtml(addSkillsToHtml(html)));
+  for (const project of temporarilyHiddenProjects) {
+    html = removeProjectCard(html, project);
+  }
+
+  return addMeshingGearsToHtml(addAboutSkillsToHtml(addSkillsToHtml(renumberProjectCards(html))));
 }
 
 function addFlowchartSupportToAppScript(source) {
@@ -458,7 +492,7 @@ export function addCustomProjectsToAppScript(source) {
 
   return addMeshingGearsToAppScript(addAboutSkillsToAppScript(
     addSkillsToAppScript(
-      addImageFitSupportToAppScript(addFlowchartSupportToAppScript(script)),
+      addImageFitSupportToAppScript(addFlowchartSupportToAppScript(removeHiddenProjectsFromAppScript(script))),
     ),
   ));
 }
