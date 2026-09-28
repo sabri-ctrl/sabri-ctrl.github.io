@@ -3,6 +3,7 @@ import { dirname } from "node:path";
 import {
   addCustomProjectsToAppScript,
   addCustomProjectsToHtml,
+  addPortfolioAssetVersion,
 } from "./project-customizations.mjs";
 import { addMeshingGearsToCss } from "./gear-customizations.mjs";
 
@@ -85,7 +86,7 @@ for (const scriptPath of ["assets/index-CbOx-5u3.js", "assets/index-DaL05lpB.js"
   if (scriptPath.endsWith("index-DaL05lpB.js")) {
     source = addCustomProjectsToAppScript(source);
   }
-  await writeFile(scriptPath, source);
+  await writeFile(scriptPath, addPortfolioAssetVersion(source));
 }
 
 const cssPath = "assets/styles-Dtw_Dlqv.css";

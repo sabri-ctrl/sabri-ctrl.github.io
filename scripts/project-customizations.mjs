@@ -15,6 +15,16 @@ const temporarilyHiddenProjects = [
   { id: "heading-boat", title: "Sensor-Based Heading Control Boat" },
 ];
 
+// These compiled filenames are reused, so version both entry points on publication.
+const portfolioAssetVersion = "20260928-boat-hidden";
+
+export function addPortfolioAssetVersion(source) {
+  return source.replace(
+    /(index-(?:CbOx-5u3|DaL05lpB)\.js)(?:\?v=[\w-]+)?/g,
+    `$1?v=${portfolioAssetVersion}`,
+  );
+}
+
 const palmProject = {
   id: "palm-fruit-harvester",
   title: "Palm Fruit Harvesting System",
@@ -386,7 +396,7 @@ export function addCustomProjectsToHtml(source) {
     html = removeProjectCard(html, project);
   }
 
-  return addMeshingGearsToHtml(addAboutSkillsToHtml(addSkillsToHtml(renumberProjectCards(html))));
+  return addPortfolioAssetVersion(addMeshingGearsToHtml(addAboutSkillsToHtml(addSkillsToHtml(renumberProjectCards(html)))));
 }
 
 function addFlowchartSupportToAppScript(source) {
@@ -500,13 +510,16 @@ export function addCustomProjectsToAppScript(source) {
 export async function applyProjectCustomizations() {
   const htmlPath = "index.html";
   const appScriptPath = "assets/index-DaL05lpB.js";
+  const runtimeScriptPath = "assets/index-CbOx-5u3.js";
   const cssPath = "assets/styles-Dtw_Dlqv.css";
   const html = await readFile(htmlPath, "utf8");
   const appScript = await readFile(appScriptPath, "utf8");
+  const runtimeScript = await readFile(runtimeScriptPath, "utf8");
   const css = await readFile(cssPath, "utf8");
 
   await writeFile(htmlPath, addCustomProjectsToHtml(html));
   await writeFile(appScriptPath, addCustomProjectsToAppScript(appScript));
+  await writeFile(runtimeScriptPath, addPortfolioAssetVersion(runtimeScript));
   await writeFile(cssPath, addMeshingGearsToCss(css));
 }
 
